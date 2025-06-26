@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação | Empréstimo com Garantia</title>
+  <link rel="stylesheet" href="simulador.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+</head>
+<body>
+  <div class="simulador-main">
+    <div class="simulador-img"></div>
+    <div class="simulador-form">
+      <div class="step active" id="step-email">
+        <h2>Qual seu e-mail?</h2>
+        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+          
+          <input type="email" id="input-email" placeholder="Digite seu e-mail" required style="flex:1;">
+        </div>
+        <button class="btn-primary" id="btn-email">Continuar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('btn-email').addEventListener('click', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('input-email').value.trim();
+      if (email) {
+        localStorage.setItem('emailEmprestimo', email);
+        window.location.href = 'cpf.html';
+      } else {
+        document.getElementById('input-email').focus();
+      }
+    });
+  </script>
+</body>
+</html>

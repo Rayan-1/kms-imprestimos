@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação | Empréstimo com Garantia</title>
+  <link rel="stylesheet" href="simulador.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+</head>
+<body>
+  <div class="simulador-main">
+    <div class="simulador-img"></div>
+    <div class="simulador-form">
+      <div class="step active" id="step-tel">
+        <h2>Seu telefone</h2>
+        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+         
+          <input type="tel" id="input-tel" placeholder="(99) 99999-9999" maxlength="15" required style="flex:1;">
+        </div>
+        <div id="tel-erro" style="color:#d32f2f;font-size:0.98rem;height:20px;margin-bottom:8px;"></div>
+        <button class="btn-primary" id="btn-tel">Aceitar e continuar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Máscara para telefone (99) 99999-9999
+    document.getElementById('input-tel').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 2) v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+      if (v.length > 7) v = v.replace(/(\d{5})(\d)/, '$1-$2');
+      e.target.value = v.slice(0, 15);
+      document.getElementById('tel-erro').textContent = "";
+    });
+
+    document.getElementById('btn-tel').addEventListener('click', function (e) {
+      e.preventDefault();
+      const telInput = document.getElementById('input-tel');
+      const tel = telInput.value.trim();
+      const erroDiv = document.getElementById('tel-erro');
+      // Validação: (99) 9XXXX-XXXX
+      const telRegex = /^\(\d{2}\) 9\d{4}-\d{4}$/;
+      if (!telRegex.test(tel)) {
+        erroDiv.textContent = "Digite um telefone válido.";
+        telInput.focus();
+        return;
+      }
+      erroDiv.textContent = "";
+      localStorage.setItem('telEmprestimo', tel);
+      window.location.href = 'continuar.html';
+    });
+  </script>
+</body>
+</html>

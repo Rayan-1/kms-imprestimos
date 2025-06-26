@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação | Empréstimo com Garantia</title>
+  <link rel="stylesheet" href="simulador.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+  <style>
+    .step.active h2 {
+      color: #0050b3;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+    .step.active p {
+      text-align: center;
+      margin-bottom: 28px;
+      font-size: 1.13rem;
+      color: #222;
+      line-height: 1.4;
+      font-weight: 400;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <div class="simulador-main">
+    <div class="simulador-img"></div>
+    <div class="simulador-form">
+      <div class="step active" id="step-final">
+        <h2>Falta pouco para você conquistar<br>a sua solução financeira!</h2>
+        <p>Ao continuar, vamos te direcionar para o WhatsApp<br>para finalizar sua simulação</p>
+        <button class="btn-primary" id="btn-final">Continuar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+  document.getElementById('btn-final').addEventListener('click', function () {
+    const nome = localStorage.getItem('nomeEmprestimo') || '';
+    const valor = localStorage.getItem('valorEmprestimo') || '';
+    const email = localStorage.getItem('emailEmprestimo') || '';
+    const cpf = localStorage.getItem('cpfEmprestimo') || '';
+    const tel = localStorage.getItem('telEmprestimo') || '';
+    const produto = localStorage.getItem('produtoEscolhido') || '';
+
+    const mensagem = 
+      `Olá! me chamo ${nome} Quero realizar uma simulação.\n\n` +
+      `*Produto:* ${produto}\n` +
+      `*Nome:* ${nome}\n` +
+      `*Valor:* R$ ${Number(valor).toLocaleString('pt-BR')}\n` +
+      `*E-mail:* ${email}\n` +
+      `*CPF:* ${cpf}\n` +
+      `*Telefone:* ${tel}`;
+
+    const numeroWhatsApp = '5588998007210'; // Troque para o número desejado
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>

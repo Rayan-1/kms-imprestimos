@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escolha seu Produto | KMS</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+  <style>
+    body {
+      min-height: 100vh;
+      background: url('kms.jpg') center 45%/cover no-repeat fixed !important;
+    }
+    .beneficios-section, .container {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    .card {
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #01244a11;
+      padding: 20px 12px;
+      width: 240px;
+      text-align: center;
+      margin-bottom: 18px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+    }
+    .card:hover, .card:focus {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 6px 24px #01244a22;
+      border-color: #0050b3;
+    }
+    .beneficios-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+    h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 8px #01244a88;
+      font-size: 2rem;
+    }
+    .clique-info {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 1.08rem;
+      letter-spacing: 0.01em;
+      opacity: 0.95;
+      text-shadow: 0 2px 8px #01244a88;
+    }
+    .card::after {
+      display: block;
+      font-size: 0.95rem;
+      color: #0050b3;
+      margin-top: 10px;
+      opacity: 0.85;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .card:hover::after, .card:focus::after {
+      opacity: 1;
+      color: #01244a;
+    }
+    @media (max-width: 900px) {
+      .beneficios-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+      .card {
+        width: 90vw;
+        max-width: 340px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="beneficios-section">
+    <div class="container">
+      <h2 style="color: #fff;">Qual solução você procura?</h2>
+      <div class="clique-info">Clique em uma opção para continuar</div>
+      <div class="beneficios-cards">
+        <div class="card" tabindex="0" onclick="selecionarProduto('Empréstimo Consignado')">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Empréstimo Consignado" style="width:48px; height:48px; margin: 16px auto 8px auto; display: block;">
+          <h3>Empréstimo Consignado</h3>
+        </div>
+        <div class="card" tabindex="0" onclick="selecionarProduto('Crédito Pessoal e Fgts')">
+          <img src="https://cdn-icons-png.flaticon.com/512/1907/1907559.png" alt="Crédito Pessoal e Fgts" style="width:48px; height:48px; margin: 16px auto 8px auto; display: block;">
+          <h3>Crédito Pessoal e FGTS</h3>
+        </div>
+        <div class="card" tabindex="0" onclick="selecionarProduto('Consórcio')">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135712.png" alt="Consórcio" style="width:48px; height:48px; margin: 16px auto 8px auto; display: block;">
+          <h3>Consórcio</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function selecionarProduto(produto) {
+      localStorage.setItem('produtoEscolhido', produto);
+      window.location.href = "nome.html";
+    }
+  </script>
+</body>
+</html>

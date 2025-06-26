@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação | Empréstimo com Garantia</title>
+  <link rel="stylesheet" href="simulador.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+</head>
+<body>
+  <div class="simulador-main">
+    <div class="simulador-img"></div>
+    <div class="simulador-form" id="simulador-steps">
+      <!-- Step 1: Valor -->
+      <div class="step active" id="step-valor">
+        <h2>De quanto você precisa?</h2>
+        <div class="valor-exibido">
+          <span>R$</span> <span id="valor-mostrado">1.000,00</span>
+        </div>
+        <input type="range" min="1000" max="150000" step="50" value="1000" id="valor-range">
+        <div class="range-labels">
+          <span>1.000</span>
+          <span>150.000</span>
+        </div>
+        <button class="btn-primary" id="btn-valor">Continuar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Atualiza o valor exibido conforme o range
+    const valorRange = document.getElementById('valor-range');
+    const valorMostrado = document.getElementById('valor-mostrado');
+    valorMostrado.textContent = Number(valorRange.value).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    valorRange.addEventListener('input', () => {
+      valorMostrado.textContent = Number(valorRange.value).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    });
+
+    // Ao clicar em continuar, salva o valor e vai para email.html
+    document.getElementById('btn-valor').addEventListener('click', function (e) {
+      e.preventDefault();
+      const valor = valorRange.value;
+      localStorage.setItem('valorEmprestimo', valor);
+      window.location.href = 'email.html';
+    });
+  </script>
+</body>
+</html>

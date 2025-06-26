@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação | Empréstimo com Garantia</title>
+  <link rel="stylesheet" href="simulador.css">
+  <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+</head>
+<body>
+  <div class="simulador-main">
+    <div class="simulador-img"></div>
+    <div class="simulador-form">
+      <div class="step active" id="step-cpf">
+        <h2>Informe seu CPF</h2>
+        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          
+          <input type="text" id="input-cpf" placeholder="Digite seu CPF" maxlength="14" required style="flex:1;">
+        </div>
+        <div id="cpf-erro" style="color:#d32f2f;font-size:0.98rem;height:20px;margin-bottom:8px;"></div>
+        <button class="btn-primary" id="btn-cpf">Continuar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/[^\d]+/g, '');
+      if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+      let soma = 0, resto;
+      for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1, i)) * (11 - i);
+      resto = (soma * 10) % 11;
+      if ((resto === 10) || (resto === 11)) resto = 0;
+      if (resto !== parseInt(cpf.substring(9, 10))) return false;
+      soma = 0;
+      for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1, i)) * (12 - i);
+      resto = (soma * 10) % 11;
+      if ((resto === 10) || (resto === 11)) resto = 0;
+      if (resto !== parseInt(cpf.substring(10, 11))) return false;
+      return true;
+    }
+
+    document.getElementById('btn-cpf').addEventListener('click', function (e) {
+      e.preventDefault();
+      const cpfInput = document.getElementById('input-cpf');
+      const cpf = cpfInput.value.trim();
+      const erroDiv = document.getElementById('cpf-erro');
+      if (cpf.length !== 14) {
+        erroDiv.textContent = "Digite o CPF completo (11 dígitos).";
+        cpfInput.focus();
+        return;
+      }
+      if (!validarCPF(cpf)) {
+        erroDiv.textContent = "CPF inválido. Verifique e tente novamente.";
+        cpfInput.focus();
+        return;
+      }
+      erroDiv.textContent = "";
+      localStorage.setItem('cpfEmprestimo', cpf);
+      window.location.href = 'telefone.html';
+    });
+
+    // Máscara simples para CPF
+    document.getElementById('input-cpf').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 3) v = v.replace(/^(\d{3})(\d)/, '$1.$2');
+      if (v.length > 7) v = v.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+      if (v.length > 11) v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+      e.target.value = v.slice(0, 14);
+      document.getElementById('cpf-erro').textContent = "";
+    });
+  </script>
+</body>

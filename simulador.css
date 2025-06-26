@@ -1,0 +1,139 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: url('kms.jpg') center 40%/cover no-repeat fixed;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 32, 64, 0.60); /* overlay escuro */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.simulador-main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simulador-form {
+  background: rgba(255,255,255,0.97);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  padding: 48px 36px 36px 36px;
+  max-width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  animation: fadeIn .4s;
+}
+
+.step.active {
+  display: flex;
+}
+
+h2 {
+  color: #0050b3;
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.valor-exibido {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-bottom: 8px;
+  accent-color: #009fe3;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 24px;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="tel"] {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  background: #f5f7fa;
+}
+
+.btn-primary {
+  background: #009fe3;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  width: 180px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background: #0050b3;
+}
+
+@media (max-width: 700px) {
+  .simulador-form {
+    padding: 32px 8vw 24px 8vw;
+    max-width: 98vw;
+  }
+  .btn-primary {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}

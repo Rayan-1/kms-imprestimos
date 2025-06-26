@@ -1,0 +1,278 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f7fa;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Banner estilo fundo com overlay escuro e texto à esquerda */
+.banner {
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  background: #222;
+  overflow: hidden;
+}
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('kms.jpg') center 45%/cover no-repeat;
+  z-index: 1;
+  opacity: 0.7;
+}
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin-left: 6vw;
+  color: #fff;
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.banner-text h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.banner-text p {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+.btn-primary {
+  background: #fff;
+  color: #0050b3;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 38px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  width: 200px;         /* largura fixa menor */
+  max-width: 90vw;      /* responsivo em telas pequenas */
+  text-align: center;
+}
+.btn-primary:hover {
+  background: #009fe3;
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .banner-content {
+    margin-left: 0;
+    padding: 40px 16px;
+    max-width: 100%;
+  }
+  .banner-text h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Benefícios */
+.beneficios-section {
+  background: #f5f7fa;
+  padding: 48px 0;
+}
+
+.beneficios-section .container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.beneficios-section h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #0050b3;
+}
+
+.beneficios-cards {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 32px 24px;
+  text-align: center;
+  width: 300px;
+}
+
+.card img {
+  width: 56px;
+  margin-bottom: 18px;
+}
+
+.card h3 {
+  color: #0050b3;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+/* FAQ */
+.faq-section {
+  background: #fff;
+  padding: 48px 0;
+}
+
+.faq-section .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-section h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #0050b3;
+}
+
+.faq-section details {
+  background: #f5f7fa;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 18px 24px;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+}
+
+.faq-section summary {
+  font-weight: 600;
+  color: #0050b3;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.faq-section details[open] {
+  background: #e3f7fa;
+}
+
+/* Footer */
+footer {
+  background: #0050b3;
+  color: #fff;
+  padding: 24px 0;
+  text-align: center;
+}
+
+footer .container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.blue-section {
+  background: #0d2e4f;
+  padding: 1px 0;
+  margin-bottom: 0;
+}
+.about-gerente {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #fff;
+}
+.foto-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  position: relative;
+  margin-top: -6px;
+}
+.gerente-titulo {
+  background: #0d2e4f;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 2px 18px;
+  border-radius: 10px;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  letter-spacing: 0.01em;
+  height: 28px;
+  line-height: 28px;
+  white-space: nowrap;
+}
+.foto-container img {
+  width: 220px;                /* aumenta o tamanho da imagem */
+  height: 220px;
+  object-fit: cover;         /* mostra a imagem inteira sem cortar */
+
+  border-radius: 50%;
+  border: 4px solid #3a7cff;
+  background: #fff;
+  margin-top: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  transition: filter 0.3s;
+}
+.foto-container img:hover {
+  filter: brightness(1.08) contrast(1.08);
+}
+.about-gerente p {
+  font-size: 1.13rem;
+  line-height: 1.6;
+  color: #e3eaf7;
+  margin: 0;
+  text-align: left;
+}
+@media (max-width: 900px) {
+  .about-gerente {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+  }
+  .about-gerente p {
+    text-align: center;
+  }
+  .foto-container {
+    min-width: unset;
+  }
+}
+
+.footer {
+  background: #01244a;
+  color: #fff;
+  padding: 32px 0 16px 0;
+  text-align: center;
+  margin-top: 32px;
+}
+
+.footer img {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #01244a11;
+  padding: 24px 18px;
+  width: 290px;
+  text-align: center;
+  margin-bottom: 18px;
+}
