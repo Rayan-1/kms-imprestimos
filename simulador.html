@@ -14,8 +14,18 @@
       <!-- Step 1: Valor -->
       <div class="step active" id="step-valor">
         <h2>De quanto você precisa?</h2>
-        <div class="valor-exibido">
-          <span>R$</span> <span id="valor-mostrado">1.000,00</span>
+        <div class="valor-exibido" style="display: flex; align-items: center; gap: 6px;">
+          <span>R$</span>
+          <input
+            type="text"
+            id="valor-mostrado"
+            value="1.000,00"
+            style="border:none; background:transparent; color:#222; font-size:2rem; font-weight:700; width:120px; text-align:center; outline:none;"
+            inputmode="numeric"
+            pattern="[0-9.,]+"
+            maxlength="10"
+            autocomplete="off"
+          >
         </div>
         <input type="range" min="1000" max="150000" step="50" value="1000" id="valor-range">
         <div class="range-labels">
@@ -27,12 +37,40 @@
     </div>
   </div>
   <script>
-    // Atualiza o valor exibido conforme o range
     const valorRange = document.getElementById('valor-range');
     const valorMostrado = document.getElementById('valor-mostrado');
-    valorMostrado.textContent = Number(valorRange.value).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+
+    // Função para formatar valor
+    function formatarValor(valor) {
+      return Number(valor).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    }
+
+    // Atualiza input ao mover o range
+    function atualizarInput(valor) {
+      valorMostrado.value = formatarValor(valor);
+    }
+    atualizarInput(valorRange.value);
+
     valorRange.addEventListener('input', () => {
-      valorMostrado.textContent = Number(valorRange.value).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+      atualizarInput(valorRange.value);
+    });
+
+    // Atualiza o range ao editar o input manualmente
+    valorMostrado.addEventListener('input', () => {
+      // Remove caracteres não numéricos exceto , e .
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(val);
+      if (!isNaN(num)) {
+        // Limita entre min e max
+        num = Math.max(1000, Math.min(150000, num));
+        valorRange.value = Math.round(num / 50) * 50;
+        atualizarInput(valorRange.value);
+      }
+    });
+
+    // Ao sair do input, formata corretamente
+    valorMostrado.addEventListener('blur', () => {
+      atualizarInput(valorRange.value);
     });
 
     // Ao clicar em continuar, salva o valor e vai para email.html
