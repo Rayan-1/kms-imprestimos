@@ -20,7 +20,7 @@
             type="text"
             id="valor-mostrado"
             value="1.000,00"
-            style="border:none; background:transparent; color:#222; font-size:2rem; font-weight:700; width:120px; text-align:center; outline:none;"
+            style="border:none; background:transparent; color:#222; font-size:2rem; font-weight:700; width:130px; text-align:center; outline:none;"
             inputmode="numeric"
             pattern="[0-9.,]+"
             maxlength="10"
@@ -57,11 +57,9 @@
 
     // Atualiza o range ao editar o input manualmente
     valorMostrado.addEventListener('input', () => {
-      // Remove caracteres não numéricos exceto , e .
       let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
       let num = parseFloat(val);
       if (!isNaN(num)) {
-        // Limita entre min e max
         num = Math.max(1000, Math.min(150000, num));
         valorRange.value = Math.round(num / 50) * 50;
         atualizarInput(valorRange.value);
