@@ -20,15 +20,18 @@
       color: #222;
       font-size: 2rem;
       font-weight: 700;
-      width: 160px;
+      min-width: 0;
+      width: 100%;
+      max-width: 200px;
       text-align: center;
       outline: none;
       letter-spacing: 1px;
+      transition: max-width 0.2s;
     }
     @media (max-width: 500px) {
       #valor-mostrado {
         font-size: 1.3rem;
-        width: 100px;
+        max-width: 110px;
       }
     }
   </style>
@@ -65,7 +68,9 @@
     const valorRange = document.getElementById('valor-range');
     const valorMostrado = document.getElementById('valor-mostrado');
 
+    // Formata valor para pt-BR
     function formatarValor(valor) {
+      if (!valor || isNaN(valor)) return '';
       return Number(valor).toLocaleString('pt-BR', {minimumFractionDigits: 2});
     }
 
@@ -79,17 +84,18 @@
       atualizarInput(valorRange.value);
     });
 
-    // Permite qualquer valor entre 1000 e 150000, inclusive 1.250, 1.350, etc.
+    // Permite apagar tudo e digitar livremente, sem forçar formatação enquanto digita
     valorMostrado.addEventListener('input', () => {
       let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      if (val === '') return; // permite apagar tudo
       let num = parseFloat(val);
       if (!isNaN(num)) {
         num = Math.max(1000, Math.min(150000, num));
-        atualizarInput(num);
         valorRange.value = num;
       }
     });
 
+    // Ao sair do input, formata corretamente
     valorMostrado.addEventListener('blur', () => {
       let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
       let num = parseFloat(val);
