@@ -22,16 +22,19 @@
     </div>
   </div>
   <script>
-    document.getElementById('btn-email').addEventListener('click', function (e) {
-      e.preventDefault();
-      const email = document.getElementById('input-email').value.trim();
-      if (email) {
-        localStorage.setItem('emailEmprestimo', email);
-        window.location.href = 'cpf.html';
-      } else {
-        document.getElementById('input-email').focus();
-      }
-    });
-  </script>
+  document.getElementById('btn-email').addEventListener('click', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('input-email').value.trim();
+    // Regex: exige @ e termina com gmail.com ou hotmail.com
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
+    if (emailRegex.test(email)) {
+      localStorage.setItem('emailEmprestimo', email);
+      window.location.href = 'cpf.html';
+    } else {
+      alert('Digite um e-mail válido do Gmail ou Hotmail.');
+      document.getElementById('input-email').focus();
+    }
+  });
+</script>
 </body>
 </html>
