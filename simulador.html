@@ -6,6 +6,33 @@
   <title>Simulação | Empréstimo com Garantia</title>
   <link rel="stylesheet" href="simulador.css">
   <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+  <style>
+    /* Ajuste para o campo de valor exibido */
+    .valor-exibido {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    #valor-mostrado {
+      border: none;
+      background: transparent;
+      color: #222;
+      font-size: 2rem;
+      font-weight: 700;
+      width: 140px;
+      text-align: center;
+      outline: none;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 500px) {
+      #valor-mostrado {
+        font-size: 1.3rem;
+        width: 90px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="simulador-main">
@@ -14,13 +41,12 @@
       <!-- Step 1: Valor -->
       <div class="step active" id="step-valor">
         <h2>De quanto você precisa?</h2>
-        <div class="valor-exibido" style="display: flex; align-items: center; gap: 6px;">
+        <div class="valor-exibido">
           <span>R$</span>
           <input
             type="text"
             id="valor-mostrado"
             value="1.000,00"
-            style="border:none; background:transparent; color:#222; font-size:2rem; font-weight:700; width:130px; text-align:center; outline:none;"
             inputmode="numeric"
             pattern="[0-9.,]+"
             maxlength="10"
@@ -40,12 +66,10 @@
     const valorRange = document.getElementById('valor-range');
     const valorMostrado = document.getElementById('valor-mostrado');
 
-    // Função para formatar valor
     function formatarValor(valor) {
       return Number(valor).toLocaleString('pt-BR', {minimumFractionDigits: 2});
     }
 
-    // Atualiza input ao mover o range
     function atualizarInput(valor) {
       valorMostrado.value = formatarValor(valor);
     }
@@ -55,7 +79,6 @@
       atualizarInput(valorRange.value);
     });
 
-    // Atualiza o range ao editar o input manualmente
     valorMostrado.addEventListener('input', () => {
       let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
       let num = parseFloat(val);
@@ -66,12 +89,10 @@
       }
     });
 
-    // Ao sair do input, formata corretamente
     valorMostrado.addEventListener('blur', () => {
       atualizarInput(valorRange.value);
     });
 
-    // Ao clicar em continuar, salva o valor e vai para email.html
     document.getElementById('btn-valor').addEventListener('click', function (e) {
       e.preventDefault();
       const valor = valorRange.value;
