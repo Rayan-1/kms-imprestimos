@@ -121,15 +121,52 @@ input[type="tel"] {
   background: #0050b3;
 }
 
+/* Responsividade para telas menores */
 @media (max-width: 700px) {
+  body {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .simulador-main {
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 0;
+  }
   .simulador-form {
-    padding: 32px 8vw 24px 8vw;
+    padding: 24px 4vw 18px 4vw;
     max-width: 98vw;
+    min-width: unset;
+    border-radius: 12px;
+    margin: 24px auto 0 auto;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  }
+  h2 {
+    font-size: 1.18rem;
+    margin-bottom: 18px;
+  }
+  .valor-exibido {
+    font-size: 1.3rem;
   }
   .btn-primary {
     width: 100%;
-    min-width: unset;
-    max-width: 100%;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+  input[type="email"],
+  input[type="text"],
+  input[type="tel"] {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* Ajustes extras para telas muito pequenas */
+@media (max-width: 400px) {
+  .simulador-form {
+    padding: 12px 2vw 12px 2vw;
+  }
+  h2 {
+    font-size: 1rem;
   }
 }
 
