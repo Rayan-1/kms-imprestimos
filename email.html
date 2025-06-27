@@ -13,28 +13,34 @@
     <div class="simulador-form">
       <div class="step active" id="step-email">
         <h2>Qual seu e-mail?</h2>
-        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:24px;">
-          
+        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <input type="email" id="input-email" placeholder="Digite seu e-mail" required style="flex:1;">
         </div>
+        <div id="email-error" style="color:#d32f2f; font-size:1rem; min-height:22px; margin-bottom:12px;"></div>
         <button class="btn-primary" id="btn-email">Continuar</button>
       </div>
     </div>
   </div>
   <script>
-  document.getElementById('btn-email').addEventListener('click', function (e) {
-    e.preventDefault();
-    const email = document.getElementById('input-email').value.trim();
-    // Regex: exige @ e termina com gmail.com ou hotmail.com
-    const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
-    if (emailRegex.test(email)) {
-      localStorage.setItem('emailEmprestimo', email);
-      window.location.href = 'cpf.html';
-    } else {
-      alert('Digite um e-mail válido do Gmail ou Hotmail.');
-      document.getElementById('input-email').focus();
-    }
-  });
-</script>
+    document.getElementById('btn-email').addEventListener('click', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('input-email').value.trim();
+      const errorDiv = document.getElementById('email-error');
+      // Regex: exige @ e termina com gmail.com ou hotmail.com
+      const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
+      if (emailRegex.test(email)) {
+        localStorage.setItem('emailEmprestimo', email);
+        window.location.href = 'cpf.html';
+      } else {
+        errorDiv.textContent = 'Digite um e-mail válido do Gmail ou Hotmail.';
+        document.getElementById('input-email').focus();
+      }
+    });
+
+    // Limpa erro ao digitar
+    document.getElementById('input-email').addEventListener('input', function () {
+      document.getElementById('email-error').textContent = '';
+    });
+  </script>
 </body>
 </html>
