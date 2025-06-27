@@ -6,45 +6,170 @@
   <title>Simulação | Empréstimo com Garantia</title>
   <link rel="stylesheet" href="simulador.css">
   <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
+  <style>
+    .valor-exibido {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    #valor-mostrado {
+      border: none;
+      background: transparent;
+      color: #222;
+      font-size: 2rem;
+      font-weight: 700;
+      min-width: 0;
+      width: 100%;
+      max-width: 200px;
+      text-align: center;
+      outline: none;
+      letter-spacing: 1px;
+      transition: max-width 0.2s;
+    }
+    @media (max-width: 500px) {
+      #valor-mostrado {
+        font-size: 1.3rem;
+        max-width: 110px;
+      }
+    }
+    /* Animação dinheiro voando */
+    .dinheiro-voando {
+      pointer-events: none;
+      position: fixed;
+      left: 50%;
+      top: 60%;
+      z-index: 9999;
+      width: 60px;
+      height: 60px;
+      opacity: 0.85;
+      animation: voar 1.2s linear forwards;
+    }
+    @keyframes voar {
+      0% {
+        transform: translate(-50%, 0) scale(1) rotate(-10deg);
+        opacity: 0.9;
+      }
+      60% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -350px) scale(1.2) rotate(25deg);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="simulador-main">
     <div class="simulador-img"></div>
-    <div class="simulador-form">
-      <div class="step active" id="step-email">
-        <h2>Qual seu e-mail?</h2>
-        <div style="width:100%;display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-          <input type="email" id="input-email" placeholder="Digite seu e-mail" required style="flex:1;">
+    <div class="simulador-form" id="simulador-steps">
+      <!-- Step 1: Valor -->
+      <div class="step active" id="step-valor">
+        <h2>De quanto você precisa?</h2>
+        <div class="valor-exibido">
+          <span>R$</span>
+          <input
+            type="text"
+            id="valor-mostrado"
+            value="1.000,00"
+            inputmode="numeric"
+            pattern="[0-9.,]+"
+            maxlength="10"
+            autocomplete="off"
+          >
         </div>
-        <div id="email-error" style="color:#d32f2f; font-size:1rem; min-height:22px; margin-bottom:12px;"></div>
-        <button class="btn-primary" id="btn-email">Continuar</button>
+        <input type="range" min="1000" max="150000" step="50" value="1000" id="valor-range">
+        <div class="range-labels">
+          <span>1.000</span>
+          <span>150.000</span>
+        </div>
+        <button class="btn-primary" id="btn-valor">Continuar</button>
       </div>
     </div>
   </div>
+  <!-- Áudio moedas -->
+  <audio id="moeda-audio" src="moeda.mp3" preload="auto"></audio>
   <script>
-  document.getElementById('btn-email').addEventListener('click', function (e) {
-    e.preventDefault();
-    const email = document.getElementById('input-email').value.trim();
-    const errorDiv = document.getElementById('email-error');
-    // Regex corrigido: exige @ e termina com gmail.com ou hotmail.com
-    const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
-    if (
-      emailRegex.test(email) ||
-      /^[^\s@]+@gmail\.com$/i.test(email) ||
-      /^[^\s@]+@hotmail\.com$/i.test(email)
-    ) {
-      localStorage.setItem('emailEmprestimo', email);
-      window.location.href = 'cpf.html';
-    } else {
-      errorDiv.textContent = 'Por favor,informe um e-mail válido!';
-      document.getElementById('input-email').focus();
-    }
-  });
+    const valorRange = document.getElementById('valor-range');
+    const valorMostrado = document.getElementById('valor-mostrado');
 
-  // Limpa erro ao digitar
-  document.getElementById('input-email').addEventListener('input', function () {
-    document.getElementById('email-error').textContent = '';
-  });
-</script>
+    function formatarValor(valor) {
+      if (!valor || isNaN(valor)) return '';
+      return Number(valor).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    }
+
+    function atualizarInput(valor) {
+      valorMostrado.value = formatarValor(valor);
+    }
+    atualizarInput(valorRange.value);
+
+    valorRange.addEventListener('input', () => {
+      atualizarInput(valorRange.value);
+    });
+
+    valorMostrado.addEventListener('input', () => {
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      if (val === '') return;
+      let num = parseFloat(val);
+      if (!isNaN(num)) {
+        num = Math.max(1000, Math.min(150000, num));
+        valorRange.value = num;
+      }
+    });
+
+    valorMostrado.addEventListener('blur', () => {
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(val);
+      if (!isNaN(num)) {
+        num = Math.max(1000, Math.min(150000, num));
+        atualizarInput(num);
+        valorRange.value = num;
+      } else {
+        atualizarInput(valorRange.value);
+      }
+    });
+
+    // Animação dinheiro voando
+    function animarDinheiro() {
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const img = document.createElement('img');
+          img.src = 'dinheiro.png'; // Use uma imagem de dinheiro/moeda (adicione na pasta do projeto)
+          img.className = 'dinheiro-voando';
+          img.style.left = (45 + Math.random() * 10) + '%';
+          img.style.top = (60 + Math.random() * 10) + '%';
+          img.style.width = (40 + Math.random() * 30) + 'px';
+          img.style.animationDuration = (1.2 + Math.random() * 0.7) + 's';
+          document.body.appendChild(img);
+          setTimeout(() => img.remove(), 2000);
+        }, i * 120);
+      }
+    }
+
+    document.getElementById('btn-valor').addEventListener('click', function (e) {
+      e.preventDefault();
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(val);
+      if (isNaN(num) || num < 1000 || num > 150000) {
+        valorMostrado.focus();
+        return;
+      }
+
+      // Animação e som
+      animarDinheiro();
+      const audio = document.getElementById('moeda-audio');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+
+      setTimeout(() => {
+        localStorage.setItem('valorEmprestimo', num);
+        window.location.href = 'email.html';
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
