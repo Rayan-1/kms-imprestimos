@@ -22,25 +22,29 @@
     </div>
   </div>
   <script>
-    document.getElementById('btn-email').addEventListener('click', function (e) {
-      e.preventDefault();
-      const email = document.getElementById('input-email').value.trim();
-      const errorDiv = document.getElementById('email-error');
-      // Regex: exige @ e termina com gmail.com ou hotmail.com
-      const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
-      if (emailRegex.test(email)) {
-        localStorage.setItem('emailEmprestimo', email);
-        window.location.href = 'cpf.html';
-      } else {
-        errorDiv.textContent = 'Digite um e-mail válido do Gmail ou Hotmail.';
-        document.getElementById('input-email').focus();
-      }
-    });
+  document.getElementById('btn-email').addEventListener('click', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('input-email').value.trim();
+    const errorDiv = document.getElementById('email-error');
+    // Regex corrigido: exige @ e termina com gmail.com ou hotmail.com
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(gmail\.com|hotmail\.com)$/i;
+    if (
+      emailRegex.test(email) ||
+      /^[^\s@]+@gmail\.com$/i.test(email) ||
+      /^[^\s@]+@hotmail\.com$/i.test(email)
+    ) {
+      localStorage.setItem('emailEmprestimo', email);
+      window.location.href = 'cpf.html';
+    } else {
+      errorDiv.textContent = 'Por favor,informe um e-mail válido!';
+      document.getElementById('input-email').focus();
+    }
+  });
 
-    // Limpa erro ao digitar
-    document.getElementById('input-email').addEventListener('input', function () {
-      document.getElementById('email-error').textContent = '';
-    });
-  </script>
+  // Limpa erro ao digitar
+  document.getElementById('input-email').addEventListener('input', function () {
+    document.getElementById('email-error').textContent = '';
+  });
+</script>
 </body>
 </html>
