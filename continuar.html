@@ -27,6 +27,25 @@
       margin-right: auto;
       white-space: pre-line;
     }
+    /* Confete */
+    .confete {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .confete-piece {
+      position: absolute;
+      width: 12px;
+      height: 24px;
+      border-radius: 3px;
+      opacity: 0.85;
+      will-change: transform;
+    }
   </style>
 </head>
 <body>
@@ -40,28 +59,70 @@
       </div>
     </div>
   </div>
+  <!-- Áudio comemoração livre -->
+  <audio id="audio-comemora" src="celebracao.mp3" preload="auto"></audio>
   <script>
-  document.getElementById('btn-final').addEventListener('click', function () {
-    const nome = localStorage.getItem('nomeEmprestimo') || '';
-    const valor = localStorage.getItem('valorEmprestimo') || '';
-    const email = localStorage.getItem('emailEmprestimo') || '';
-    const cpf = localStorage.getItem('cpfEmprestimo') || '';
-    const tel = localStorage.getItem('telEmprestimo') || '';
-    const produto = localStorage.getItem('produtoEscolhido') || '';
+    // Função para criar confetes animados
+    function soltarConfete() {
+      const colors = ['#FFD700', '#FF69B4', '#00CFFF', '#43E97B', '#FF8C00', '#B266FF', '#FF4040'];
+      const confeteContainer = document.createElement('div');
+      confeteContainer.className = 'confete';
+      document.body.appendChild(confeteContainer);
 
-    const mensagem = 
-      `Olá! me chamo ${nome} Quero realizar uma simulação.\n\n` +
-      `*Produto:* ${produto}\n` +
-      `*Nome:* ${nome}\n` +
-      `*Valor:* R$ ${Number(valor).toLocaleString('pt-BR')}\n` +
-      `*E-mail:* ${email}\n` +
-      `*CPF:* ${cpf}\n` +
-      `*Telefone:* ${tel}`;
+      for (let i = 0; i < 60; i++) {
+        const confete = document.createElement('div');
+        confete.className = 'confete-piece';
+        confete.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confete.style.left = Math.random() * 100 + 'vw';
+        confete.style.top = '-30px';
+        confete.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confete.style.animation = `confete-fall 1.5s linear forwards`;
+        confete.style.animationDelay = (Math.random() * 0.7) + 's';
+        confeteContainer.appendChild(confete);
 
-    const numeroWhatsApp = '5588998007210'; // Troque para o número desejado
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-    window.open(url, '_blank');
-  });
-</script>
+        // Animação manual para queda
+        setTimeout(() => {
+          confete.style.transition = 'transform 1.2s cubic-bezier(.4,1.4,.6,1), top 1.2s linear';
+          confete.style.top = (80 + Math.random() * 15) + 'vh';
+          confete.style.transform = `rotate(${Math.random() * 720 - 360}deg)`;
+        }, 100 + Math.random() * 400);
+      }
+      // Remove confete depois de 2.5s
+      setTimeout(() => confeteContainer.remove(), 2500);
+    }
+
+    document.getElementById('btn-final').addEventListener('click', function () {
+      // Animação e áudio
+      soltarConfete();
+      const audio = document.getElementById('audio-comemora');
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+
+      // Depois de 2.5s, direciona para o WhatsApp
+      setTimeout(() => {
+        const nome = localStorage.getItem('nomeEmprestimo') || '';
+        const valor = localStorage.getItem('valorEmprestimo') || '';
+        const email = localStorage.getItem('emailEmprestimo') || '';
+        const cpf = localStorage.getItem('cpfEmprestimo') || '';
+        const tel = localStorage.getItem('telEmprestimo') || '';
+        const produto = localStorage.getItem('produtoEscolhido') || '';
+
+        const mensagem = 
+          `Olá! me chamo ${nome} Quero realizar uma simulação.\n\n` +
+          `*Produto:* ${produto}\n` +
+          `*Nome:* ${nome}\n` +
+          `*Valor:* R$ ${Number(valor).toLocaleString('pt-BR')}\n` +
+          `*E-mail:* ${email}\n` +
+          `*CPF:* ${cpf}\n` +
+          `*Telefone:* ${tel}`;
+
+        const numeroWhatsApp = '5588998007210'; // Troque para o número desejado
+        const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+        window.open(url, '_blank');
+      }, 2500);
+    });
+  </script>
 </body>
 </html>
