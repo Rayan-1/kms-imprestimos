@@ -27,7 +27,6 @@
       margin-right: auto;
       white-space: pre-line;
     }
-    /* Confete */
     .confete {
       position: fixed;
       top: 0;
@@ -59,10 +58,8 @@
       </div>
     </div>
   </div>
-  <!-- Áudio comemoração livre -->
-  <audio id="audio-comemora" src="celebracao.mp3" preload="auto"></audio>
+  <audio id="audio-comemora" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4c3b.mp3" preload="auto"></audio>
   <script>
-    // Função para criar confetes animados
     function soltarConfete() {
       const colors = ['#FFD700', '#FF69B4', '#00CFFF', '#43E97B', '#FF8C00', '#B266FF', '#FF4040'];
       const confeteContainer = document.createElement('div');
@@ -80,19 +77,16 @@
         confete.style.animationDelay = (Math.random() * 0.7) + 's';
         confeteContainer.appendChild(confete);
 
-        // Animação manual para queda
         setTimeout(() => {
           confete.style.transition = 'transform 1.2s cubic-bezier(.4,1.4,.6,1), top 1.2s linear';
           confete.style.top = (80 + Math.random() * 15) + 'vh';
           confete.style.transform = `rotate(${Math.random() * 720 - 360}deg)`;
         }, 100 + Math.random() * 400);
       }
-      // Remove confete depois de 2.5s
       setTimeout(() => confeteContainer.remove(), 2500);
     }
 
     document.getElementById('btn-final').addEventListener('click', function () {
-      // Animação e áudio
       soltarConfete();
       const audio = document.getElementById('audio-comemora');
       if (audio) {
@@ -100,7 +94,6 @@
         audio.play();
       }
 
-      // Depois de 2.5s, direciona para o WhatsApp
       setTimeout(() => {
         const nome = localStorage.getItem('nomeEmprestimo') || '';
         const valor = localStorage.getItem('valorEmprestimo') || '';
@@ -119,8 +112,8 @@
           `*Telefone:* ${tel}`;
 
         const numeroWhatsApp = '5588998007210'; // Troque para o número desejado
-        const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-        window.open(url, '_blank');
+        // Use window.location.href para garantir redirecionamento no mobile
+        window.location.href = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
       }, 2500);
     });
   </script>
