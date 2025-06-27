@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="simulador.css">
   <link rel="icon" type="image/png" sizes="256x256" href="kms.png">
   <style>
-    /* Ajuste para o campo de valor exibido */
     .valor-exibido {
       display: flex;
       align-items: center;
@@ -21,7 +20,7 @@
       color: #222;
       font-size: 2rem;
       font-weight: 700;
-      width: 140px;
+      width: 160px;
       text-align: center;
       outline: none;
       letter-spacing: 1px;
@@ -29,7 +28,7 @@
     @media (max-width: 500px) {
       #valor-mostrado {
         font-size: 1.3rem;
-        width: 90px;
+        width: 100px;
       }
     }
   </style>
@@ -70,6 +69,7 @@
       return Number(valor).toLocaleString('pt-BR', {minimumFractionDigits: 2});
     }
 
+    // Atualiza input ao mover o range
     function atualizarInput(valor) {
       valorMostrado.value = formatarValor(valor);
     }
@@ -79,24 +79,38 @@
       atualizarInput(valorRange.value);
     });
 
+    // Permite qualquer valor entre 1000 e 150000, inclusive 1.250, 1.350, etc.
     valorMostrado.addEventListener('input', () => {
       let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
       let num = parseFloat(val);
       if (!isNaN(num)) {
         num = Math.max(1000, Math.min(150000, num));
-        valorRange.value = Math.round(num / 50) * 50;
-        atualizarInput(valorRange.value);
+        atualizarInput(num);
+        valorRange.value = num;
       }
     });
 
     valorMostrado.addEventListener('blur', () => {
-      atualizarInput(valorRange.value);
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(val);
+      if (!isNaN(num)) {
+        num = Math.max(1000, Math.min(150000, num));
+        atualizarInput(num);
+        valorRange.value = num;
+      } else {
+        atualizarInput(valorRange.value);
+      }
     });
 
     document.getElementById('btn-valor').addEventListener('click', function (e) {
       e.preventDefault();
-      const valor = valorRange.value;
-      localStorage.setItem('valorEmprestimo', valor);
+      let val = valorMostrado.value.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(val);
+      if (isNaN(num) || num < 1000 || num > 150000) {
+        valorMostrado.focus();
+        return;
+      }
+      localStorage.setItem('valorEmprestimo', num);
       window.location.href = 'email.html';
     });
   </script>
