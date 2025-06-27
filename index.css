@@ -64,24 +64,13 @@ body {
   text-decoration: none;
   display: inline-block;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  width: 200px;         /* largura fixa menor */
-  max-width: 90vw;      /* responsivo em telas pequenas */
+  width: 200px;
+  max-width: 90vw;
   text-align: center;
 }
 .btn-primary:hover {
   background: #009fe3;
   color: #fff;
-}
-@media (max-width: 900px) {
-  .banner-content {
-    margin-left: 0;
-    padding: 40px 16px;
-    max-width: 100%;
-  }
-  .banner-text h1 {
-    font-size: 2rem;
-  }
 }
 
 /* Benefícios */
@@ -93,6 +82,7 @@ body {
 .beneficios-section .container {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 .beneficios-section h2 {
@@ -110,11 +100,12 @@ body {
 
 .card {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  padding: 32px 24px;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #01244a11;
+  padding: 24px 18px;
+  width: 290px;
   text-align: center;
-  width: 300px;
+  margin-bottom: 18px;
 }
 
 .card img {
@@ -137,6 +128,7 @@ body {
 .faq-section .container {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 .faq-section h2 {
@@ -176,6 +168,7 @@ footer {
 footer .container {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 .blue-section {
@@ -190,6 +183,7 @@ footer .container {
   max-width: 1100px;
   margin: 0 auto;
   color: #fff;
+  padding: 0 16px;
 }
 .foto-container {
   display: flex;
@@ -218,10 +212,9 @@ footer .container {
   white-space: nowrap;
 }
 .foto-container img {
-  width: 220px;                /* aumenta o tamanho da imagem */
+  width: 220px;
   height: 220px;
-  object-fit: cover;         /* mostra a imagem inteira sem cortar */
-
+  object-fit: cover;
   border-radius: 50%;
   border: 4px solid #3a7cff;
   background: #fff;
@@ -239,19 +232,6 @@ footer .container {
   margin: 0;
   text-align: left;
 }
-@media (max-width: 900px) {
-  .about-gerente {
-    flex-direction: column;
-    text-align: center;
-    gap: 18px;
-  }
-  .about-gerente p {
-    text-align: center;
-  }
-  .foto-container {
-    min-width: unset;
-  }
-}
 
 .footer {
   background: #01244a;
@@ -267,12 +247,82 @@ footer .container {
   box-shadow: 0 2px 12px #0002;
 }
 
-.card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 16px #01244a11;
-  padding: 24px 18px;
-  width: 290px;
-  text-align: center;
-  margin-bottom: 18px;
+/* Responsividade */
+@media (max-width: 900px) {
+  .banner-content {
+    margin-left: 0;
+    padding: 40px 16px;
+    max-width: 100%;
+  }
+  .banner-text h1 {
+    font-size: 2rem;
+  }
+  .beneficios-cards {
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+  }
+  .card {
+    width: 90vw;
+    max-width: 340px;
+    padding: 20px 10px;
+  }
+  .about-gerente {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+    padding: 0 8px;
+  }
+  .about-gerente p {
+    text-align: center;
+  }
+  .foto-container {
+    min-width: unset;
+  }
+  .faq-section .container,
+  .beneficios-section .container,
+  footer .container {
+    padding: 0 8px;
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .banner {
+    min-height: 220px;
+  }
+  .banner-content {
+    padding: 24px 4vw;
+    gap: 14px;
+  }
+  .btn-primary {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+    padding: 14px 0;
+    font-size: 1rem;
+  }
+  .card {
+    width: 98vw;
+    max-width: 99vw;
+    padding: 16px 4vw;
+  }
+  .foto-container img {
+    width: 120px;
+    height: 120px;
+    margin-top: 12px;
+  }
+  .gerente-titulo {
+    font-size: 0.95rem;
+    padding: 2px 10px;
+    height: 22px;
+    line-height: 22px;
+    top: -12px;
+  }
+  .faq-section details {
+    padding: 12px 8px;
+  }
+  .footer {
+    padding: 18px 0 8px 0;
+  }
 }
